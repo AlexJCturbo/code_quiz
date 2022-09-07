@@ -139,18 +139,7 @@ var showScores = function(){
     clearTimeout(timerInterval);
 
     console.log(score);
-    userScoreDisplay.innerHTML = score;
-
-    // userScoreDisplay.innerHTML = "";
-    // var setHighscores = JSON.parse(localStorage.getItem("savedHighscores")) || [];
-    // for (j = 0; j < setHighscores.length; j++){
-    //     var newName = document.createElement("li");
-    //     var newScore = document.createElement("li");
-    //     newName.textContent = setHighscores[i].Initials;
-    //     newScore.textContent = setHighscores[i].Highscore;
-    //     userScoreDisplay.appendChild(newName);
-    //     userScoreDisplay.appendChild(newScore);
-    // }
+    userScoreDisplay.innerHTML = score;         //improve
 
     restartQuiz.addEventListener("click", function(ev){
         ev.preventDefault();
@@ -160,23 +149,17 @@ var showScores = function(){
         addInitialsSection.style.display = "none"
         displayHighScores.style.display = "none";
         highScoresLink.style.display = "inline";
-
     });
 
     clearHighScores.addEventListener("click", function(e){
         e.preventDefault();
         localStorage.clear();
     });
-    
 }
 
-
 var setName = function(){
-
     clearTimeout(timerInterval);
     userCounter ++;
-
-    console.log(userCounter);
     
     startQuizPage.style.display = "none";
     questionsSection.style.display = "none";
@@ -188,10 +171,6 @@ var setName = function(){
 
     //document.getElementById("sendInitials").onclick = function(){}
     //submitInitials.addEventListener("click", function(){
-
-    //userInitialsTag = localStorage.getItem("Initials");
-    //highScore = localStorage.getItem("Highscore");
-
     submitInitials.onclick = function(){
         console.log("I'm listening");
         userInitialsInput = userInitials.value
@@ -201,8 +180,6 @@ var setName = function(){
             return false;
         }
         else {
-            //console.log(currentUserScore);
-
             savedHighscores = JSON.parse(localStorage.getItem("savedHighscores")) || [];
             currentUserData = [{
                 "No.": userCounter,
@@ -234,13 +211,6 @@ var renderQuestion = function() {
         optionB.innerHTML = q.option_B;
         optionC.innerHTML = q.option_C;
         optionD.innerHTML = q.option_D;
-    
-        console.log(q);
-        console.log(currentQuestion.innerHTML);
-        console.log(optionA.innerHTML);
-        console.log(optionB.innerHTML);
-        console.log(optionC.innerHTML);
-        console.log(optionD.innerHTML);
     }
 }
 
@@ -264,8 +234,8 @@ var confirmAnswer = function (clicked){
         console.log(currentQuestionIndex);
         console.log(clicked);
         console.log("Wrong!");
-        setTimeout(function(){ renderQuestion(); }, 500);
-        //setTimeout(() => { renderQuestion(); }, 1500);
+        //setTimeout(function(){ renderQuestion(); }, 1500);
+        setTimeout(() => { renderQuestion(); }, 1500);
     }
 
     //When index of question is equal to questions.length send setName() function
@@ -309,7 +279,7 @@ var startQuiz = function (){
     countDown = 10;
     score = 0;
     currentQuestionIndex = 0;
-    userInitials.value = " ";
+    userInitials.value = null;
     displayQuestions ();
 }
 
