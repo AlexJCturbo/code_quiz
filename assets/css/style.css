@@ -24,7 +24,7 @@ a:hover {
     color: black;
 }
 
-#intro, #startBtn, #sendInitials {
+#intro, #startBtn, #sendInitials, #restart, #clearScores {
     margin: 20px;
 }
 
@@ -39,7 +39,7 @@ a:hover {
     justify-content: center;
 }
 
-#mainHeader, #questionsTittle, #testCompleted {
+#mainHeader, #questionsTittle, #testCompleted, #highScoresTittle {
     padding: 15px;
     font-weight: bolder;
 }
