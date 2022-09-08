@@ -278,7 +278,7 @@ var confirmAnswer = function (clicked){
         console.log(clicked);
         console.log("Correct!")
         console.log(currentQuestionIndex);
-        setTimeout(function(){ renderQuestion(); }, 1000);
+        setTimeout(function(){ renderQuestion(); }, 1500);
     }
     else if (clicked !== correctSol) {
         currentQuestionIndex++;
@@ -307,7 +307,7 @@ var runTimer = function(){
         }else if (countDown <= 0){
             alert("Time is up!");
             clearInterval(timerInterval);
-            countDown = 10;
+            countDown = 2;
             setName();
         }
         timerText.textContent = 'Time remaining: ' + countDown;
@@ -329,7 +329,7 @@ var displayQuestions = function(){
 //Start quiz function
 var startQuiz = function (){
     //Ressetting values
-    countDown = 10;
+    countDown = 2;
     score = 0;
     currentQuestionIndex = 0;
     userInitials.value = null;

@@ -59,8 +59,10 @@ a:hover {
 }
 
 #displayFinalScore {
+    padding-bottom: 15px;
     font-weight: bolder;
     font-size: larger;
+
 }
 
 #answerResult {
