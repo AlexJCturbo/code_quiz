@@ -3,22 +3,18 @@ var btnStart = document.getElementById("startBtn");
 var startQuizPage = document.getElementById("startPage");
 var highScoresLink = document.getElementById("highScores");
 var questionsSection = document.getElementById("displayQuestions");
-
 var optionA = document.getElementById("optionA");
 var optionB = document.getElementById("optionB");
 var optionC = document.getElementById("optionC");
 var optionD = document.getElementById("optionD");
-
 var currentQuestionNumber = document.getElementById("questionsTittle");
 var currentQuestion = document.getElementById("showQuestion");
-
 var resultAnswer = document.getElementById("answerResult");
 var addInitialsSection = document.getElementById("initialsSection");
 var userInitials = document.getElementById("userInitials");
 var submitInitials = document.getElementById("sendInitials");
 var showFinalScore = document.getElementById("displayFinalScore");
 var displayHighScores = document.getElementById("allHighScores");
-//var userScoreDisplay = document.getElementById("eachHighScore");
 var restartQuiz = document.getElementById("retakeQuiz");
 var clearHighScores = document.getElementById("clearScores")
 
@@ -31,7 +27,6 @@ var userCounter = 0;
 var userInitialsInput = "";
 var highScore;
 var savedHighscores;
-var currentUserScore;
 var currentUserData;
 var timerInterval = 0;
 var allUsersHighScores;
@@ -132,7 +127,7 @@ let questions = [
     },
 ]
 
-
+//Function that displays High Scores
 var showScores = function(){
     if(userCounter > 0) {
         startQuizPage.style.display = "none";
@@ -172,32 +167,18 @@ var showScores = function(){
     }
 }
 
-//Display High Scores in a list
+//Add High Scores to a list
 var displayAllHighScores = function(){
 
     allUsersHighScores = JSON.parse(localStorage.savedHighscores);
-    console.log(localStorage.savedHighscores);
-    //console.log(allUsersHighScores.join(" "));
-    console.log(allUsersHighScores);
-    console.log(allUsersHighScores[0]);
-    console.log(allUsersHighScores[0].Initials);
-    console.log(allUsersHighScores[0].Highscore);
-    console.log(allUsersHighScores.length);
-
-    
 
     for(var k = userCounter-1; k < allUsersHighScores.length; k++){
     listEntries = allUsersHighScores[k].Number + ". " + allUsersHighScores[k].Initials + ": " + allUsersHighScores[k].Highscore + " points.";
-    console.log(listEntries);
-    console.log(k);
 
     newListEntry = document.createElement('li');
     newListEntry.innerHTML = listEntries;
     //newListEntry.appendChild(document.createTextNode(listEntries));
     document.getElementById("allScores").appendChild(newListEntry);
-    
-    //list.userScoreDisplay.innerHTML = allUsersHighScores[k].Initials + ": " + allUsersHighScores[k].Highscore + " points.";
-    //userScoreDisplay.appendChild(newListEntry);
     }
 }
 
@@ -214,10 +195,7 @@ var setName = function(){
 
     showFinalScore.innerHTML = score;
 
-    //document.getElementById("sendInitials").onclick = function(){}
-    //submitInitials.addEventListener("click", function(){
     submitInitials.onclick = function(){
-        //console.log("I'm listening");
         userInitialsInput = userInitials.value
 
         if (userInitialsInput === ""){
@@ -231,12 +209,8 @@ var setName = function(){
                 "Initials": userInitialsInput.trim(),
                 "Highscore": score
             }
-
             savedHighscores.push(currentUserData)
             localStorage.setItem("savedHighscores", JSON.stringify(savedHighscores));
-            // localStorage.setItem("ID", userCounter)
-            // localStorage.setItem("Initials", userInitialsInput.trim());
-            // localStorage.setItem("highscore", score);
         }
         showScores();
     }
@@ -275,18 +249,12 @@ var confirmAnswer = function (clicked){
         score = score + 10;
         currentQuestionIndex++;
         resultAnswer.innerHTML = "Correct!"
-        console.log(clicked);
-        console.log("Correct!")
-        console.log(currentQuestionIndex);
         setTimeout(function(){ renderQuestion(); }, 1500);
     }
     else if (clicked !== correctSol) {
         currentQuestionIndex++;
         countDown = countDown - 5;
         resultAnswer.innerHTML = "Wrong!"
-        console.log(currentQuestionIndex);
-        console.log(clicked);
-        console.log("Wrong!");
         //setTimeout(function(){ renderQuestion(); }, 1500);
         setTimeout(() => { renderQuestion(); }, 1500);
     }
@@ -307,7 +275,7 @@ var runTimer = function(){
         }else if (countDown <= 0){
             alert("Time is up!");
             clearInterval(timerInterval);
-            countDown = 2;
+            countDown = 60;
             setName();
         }
         timerText.textContent = 'Time remaining: ' + countDown;
@@ -329,7 +297,7 @@ var displayQuestions = function(){
 //Start quiz function
 var startQuiz = function (){
     //Ressetting values
-    countDown = 2;
+    countDown = 60;
     score = 0;
     currentQuestionIndex = 0;
     userInitials.value = null;
