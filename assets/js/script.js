@@ -18,8 +18,8 @@ var userInitials = document.getElementById("userInitials");
 var submitInitials = document.getElementById("sendInitials");
 var showFinalScore = document.getElementById("displayFinalScore");
 var displayHighScores = document.getElementById("allHighScores");
-var userScoreDisplay = document.getElementById("eachHighScore");
-var restartQuiz = document.getElementById("restart");
+//var userScoreDisplay = document.getElementById("eachHighScore");
+var restartQuiz = document.getElementById("retakeQuiz");
 var clearHighScores = document.getElementById("clearScores")
 
 var countDown = 0;
@@ -34,6 +34,9 @@ var savedHighscores;
 var currentUserScore;
 var currentUserData;
 var timerInterval = 0;
+var allUsersHighScores;
+var listEntries;
+var newListEntry;
 
 // Questions for the quiz
 let questions = [
@@ -131,36 +134,78 @@ let questions = [
 
 
 var showScores = function(){
-    startQuizPage.style.display = "none";
-    questionsSection.style.display = "none";
-    addInitialsSection.style.display = "none"
-    displayHighScores.style.display = "inline";
-
-    clearTimeout(timerInterval);
-
-    console.log(score);
-    userScoreDisplay.innerHTML = score;         //improve
-
-    restartQuiz.addEventListener("click", function(ev){
-        ev.preventDefault();
-
-        startQuizPage.style.display = "inline";
+    if(userCounter > 0) {
+        startQuizPage.style.display = "none";
         questionsSection.style.display = "none";
         addInitialsSection.style.display = "none"
-        displayHighScores.style.display = "none";
-        highScoresLink.style.display = "inline";
-    });
+        displayHighScores.style.display = "inline";
 
-    clearHighScores.addEventListener("click", function(e){
-        e.preventDefault();
-        localStorage.clear();
-    });
+        clearTimeout(timerInterval);
+        displayAllHighScores();
+
+        //Function to retake the quiz
+        restartQuiz.addEventListener("click", function(ev){
+            ev.preventDefault();
+
+            startQuizPage.style.display = "inline";
+            questionsSection.style.display = "none";
+            addInitialsSection.style.display = "none"
+            displayHighScores.style.display = "none";
+            highScoresLink.style.display = "inline";
+        });
+
+        clearHighScores.addEventListener("click", function(e){
+            e.preventDefault();
+            localStorage.clear();
+            userCounter = 0;
+            // while(newListEntry.firstChild){
+            //     newListEntry.removeChild(newListEntry.firstChild);
+            // }
+
+            document.getElementById("allScores").innerHTML = "";
+
+            startQuizPage.style.display = "inline";
+            questionsSection.style.display = "none";
+            addInitialsSection.style.display = "none"
+            displayHighScores.style.display = "none";
+        });
+    }
 }
 
+//Display High Scores in a list
+var displayAllHighScores = function(){
+
+    allUsersHighScores = JSON.parse(localStorage.savedHighscores);
+    console.log(localStorage.savedHighscores);
+    //console.log(allUsersHighScores.join(" "));
+    console.log(allUsersHighScores);
+    console.log(allUsersHighScores[0]);
+    console.log(allUsersHighScores[0].Initials);
+    console.log(allUsersHighScores[0].Highscore);
+    console.log(allUsersHighScores.length);
+
+    
+
+    for(var k = userCounter-1; k < allUsersHighScores.length; k++){
+    listEntries = allUsersHighScores[k].Number + ". " + allUsersHighScores[k].Initials + ": " + allUsersHighScores[k].Highscore + " points.";
+    console.log(listEntries);
+    console.log(k);
+
+    newListEntry = document.createElement('li');
+    newListEntry.innerHTML = listEntries;
+    //newListEntry.appendChild(document.createTextNode(listEntries));
+    document.getElementById("allScores").appendChild(newListEntry);
+    
+    //list.userScoreDisplay.innerHTML = allUsersHighScores[k].Initials + ": " + allUsersHighScores[k].Highscore + " points.";
+    //userScoreDisplay.appendChild(newListEntry);
+    }
+}
+
+//Function to input Initials
 var setName = function(){
     clearTimeout(timerInterval);
-    userCounter ++;
-    
+    localStorage.setItem("ID", userCounter);
+
     startQuizPage.style.display = "none";
     questionsSection.style.display = "none";
     addInitialsSection.style.display = "inline"
@@ -172,7 +217,7 @@ var setName = function(){
     //document.getElementById("sendInitials").onclick = function(){}
     //submitInitials.addEventListener("click", function(){
     submitInitials.onclick = function(){
-        console.log("I'm listening");
+        //console.log("I'm listening");
         userInitialsInput = userInitials.value
 
         if (userInitialsInput === ""){
@@ -181,11 +226,11 @@ var setName = function(){
         }
         else {
             savedHighscores = JSON.parse(localStorage.getItem("savedHighscores")) || [];
-            currentUserData = [{
-                "No.": userCounter,
+            currentUserData = {
+                "Number": userCounter,
                 "Initials": userInitialsInput.trim(),
                 "Highscore": score
-            }]
+            }
 
             savedHighscores.push(currentUserData)
             localStorage.setItem("savedHighscores", JSON.stringify(savedHighscores));
@@ -197,6 +242,14 @@ var setName = function(){
     }
 }
 
+var buttonScores = function(){
+    if(userCounter > 0) {
+        startQuizPage.style.display = "none";
+        questionsSection.style.display = "none";
+        addInitialsSection.style.display = "none"
+        displayHighScores.style.display = "inline";
+    }
+}
 
 //Function to render questions
 var renderQuestion = function() {
@@ -287,4 +340,5 @@ var startQuiz = function (){
 btnStart.addEventListener('click', function(event) {
     event.preventDefault();
     startQuiz();
+    userCounter++;
 });

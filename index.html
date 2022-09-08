@@ -16,7 +16,7 @@
     <!-- section for High Scores href and Time remaining display -->
     <section class="card-body d-flex justify-content-between" id="topElements">
         <div id="highScores">
-            <a href="javascript:null" onClick="javascript:showScores()">View High Scores</a>
+            <a href="javascript:null" onClick="javascript:buttonScores()">View High Scores</a>
         </div>
         <div id="timerDown" class="d-flex justify-content-end">Time remaining: 50</div>
     </section>
@@ -83,13 +83,13 @@
         <!-- section for high scores -->
         <section style="display: none;" id="allHighScores">
             <h2 class="d-flex justify-content-center text-center" id="highScoresTittle">High Scores</h2>
-            <div id="allHighScores">
+            <div id="listScores" class="d-flex p-2 justify-content-center">
                 <ul id = "allScores">
-                    <li id = "eachHighScore" class="d-flex justify-content-center align-items-center"></li>
+                    <!-- <li id = "eachHighScore" class="d-flex justify-content-center align-items-center"></li> -->
                 </ul>
             </div>
             <div class="d-flex justify-content-center text-center">
-                <button type="button" class="btn btn-primary" id="restart">Retake Quiz</button>
+                <button type="button" class="btn btn-primary" id="retakeQuiz">Retake Quiz</button>
                 <button type="button" class="btn btn-primary" id="clearScores">Clear Highscores</button>
             </div>
         </section>

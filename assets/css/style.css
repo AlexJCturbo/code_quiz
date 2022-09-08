@@ -24,7 +24,7 @@ a:hover {
     color: black;
 }
 
-#intro, #startBtn, #sendInitials, #restart, #clearScores {
+#intro, #startBtn, #sendInitials, #retakeQuiz, #clearScores {
     margin: 20px;
 }
 
@@ -69,9 +69,17 @@ a:hover {
     color: grey;
 }
 
-#eachHighScore {
+#allScores {
     list-style: none;
     font-size:x-large;
     font-weight: bold;
     margin: 40px;
+}
+
+#allScores {
+    margin: 5px 5px;
+    padding: 5px;
+    background-color: rgb(44, 70, 141);
+    color: rgba(232, 238, 238, 0.949);
+    border-radius: 6px;
 }
